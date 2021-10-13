@@ -109,7 +109,7 @@ def get_longest_same_div_count(lista):
     secv_max_div=[]
     for i in range(len(lista)):
         for j in range(i,len(lista)):
-            if verificare_secventa_div(lista[i:j+1]) and len(lista[i:j+1])>=len(secv_max_div):
+            if verificare_secventa_div(lista[i:j+1]) and len(lista[i:j+1])>len(secv_max_div):
                 secv_max_div=lista[i:j+1]
     return secv_max_div
 
@@ -118,17 +118,56 @@ def test_get_longest_same_div_count():
     assert get_longest_same_div_count([4, 2,3,6]) == [2,3]
     assert get_longest_same_div_count([12, 3, 15, 25, 9, 16]) == [25,9]
     assert get_longest_same_div_count([1,2,1,1]) == [1,1]
-    assert get_longest_same_div_count([12,2,6]) == [6]
+    assert get_longest_same_div_count([12,2,6]) == [12]
+
+
+def verificare_secventa_neprim(lista):
+    '''
+        -verifica daca toate elementele din lista data sunt numere neprime
+        Input:
+        -o lista lista[] cu date de tip int
+        Output:va returna True, daca lista are toate elementele neprime
+        sau False, in caz contrar(de tip bool)
+        -
+        '''
+    for i in lista:
+        if verificare_prim(i):
+            return False
+    return True
+
+
+
+def get_longest_all_not_prime(lista):
+    '''
+        - determina cea mai lunga secventa de numere neprime
+        Input:
+        - o lista lista[] cu date de tip int
+        Output
+        - o lista secv_max_neprim[] cu date de tip int ce va contine secventa maxima ceruta
+        '''
+    secv_max_neprim=[]
+    for i in range(len(lista)):
+        for j in range(i,len(lista)):
+            if verificare_secventa_neprim(lista[i:j+1]) and len(lista[i:j+1])>len(secv_max_neprim):
+                secv_max_neprim=lista[i:j+1]
+    return secv_max_neprim
+
+def test_get_longest_all_not_prime():
+    assert get_longest_all_not_prime([2,3,5]) == []
+    assert get_longest_all_not_prime([7,12,6,8,11]) == [12,6,8]
+    assert get_longest_all_not_prime([2,13,4]) == [4]
 
 
 def main():
     test_get_longest_all_primes()
     test_get_longest_same_div_count()
+    test_get_longest_all_not_prime()
     while True:
         print("1.Citire date.")
-        print("2.Determinare cea mai lunga subsecventa de numere prime. ")
+        print("2.Determinare cea mai lunga subsecventa de numere prime.")
         print("3.Determinare cea mai lunga subsecventa de numere ce au acelasi nr de divizori.")
-        print("4.Iesire.")
+        print("4.Determinare cea mai lunga subsecventa de numere neprime.")
+        print("5.Iesire.")
         optiune = input("Dati optiunea: ")
         if optiune == "1":
             lista=[]
@@ -138,6 +177,8 @@ def main():
         elif optiune == "3":
             print(get_longest_same_div_count(lista))
         elif optiune == "4":
+            print(get_longest_all_not_prime(lista))
+        elif optiune == "5":
             print("Meniul se va inchide.")
             break
         else:
